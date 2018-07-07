@@ -45,6 +45,14 @@ ARGS:
     <IMAGE_PATH>    Path to the image file
 ```
 
+## Installing
+
+With Cargo:
+
+```bash
+cargo install ghimlink
+```
+
 ## TODO
 
 - Add support for remotes other than `origin`.
