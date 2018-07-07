@@ -3,6 +3,11 @@ authors = ["Paul Cowie <paul.cowie@ntlworld.com>"]
 name = "ghimlink"
 version = "0.1.0"
 description = "Generates a Github-Flavoured-Markdown formatted image link to an image in the same repository."
+license = "GPL 3.0"
+exclude = [
+    "res/*",
+]
+repository = "https://github.com/SCOTPAUL/ghimlink"
 
 [dependencies]
 clap = "2.31.2"

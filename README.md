@@ -27,7 +27,7 @@ Ghimlink will handle retreiving your Github remote data automatically (as long a
 
 ```
 ghimlink 0.1.0
-Paul Cowie <paul.cowie@glasgow.ac.uk>
+Paul Cowie <paul.cowie@ntlworld.com>
 Generates a Github-Flavoured-Markdown formatted image link to an image in the same repository.
 
 USAGE:
