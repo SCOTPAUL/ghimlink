@@ -2,7 +2,10 @@
 authors = ["Paul Cowie <paul.cowie@glasgow.ac.uk>"]
 name = "ghimlink"
 version = "0.1.0"
+description = "Generates a Github-Flavoured-Markdown formatted image link to an image in the same repository."
 
 [dependencies]
 clap = "2.31.2"
 git2 = "0.7.1"
+regex = "1.0.0"
+text_io = "0.1.7"
