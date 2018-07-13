@@ -1,4 +1,4 @@
-# Ghimlink
+# Ghimlink (Github Image Linker)
 
 A simple command-line application for generating a Github-Flavoured-Markdown image link for a file in your repository.
 
