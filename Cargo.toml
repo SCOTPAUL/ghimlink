@@ -1,7 +1,7 @@
 [package]
 authors = ["Paul Cowie <paul.cowie@ntlworld.com>"]
 name = "ghimlink"
-version = "0.1.0"
+version = "0.2.0"
 description = "Generates a Github-Flavoured-Markdown formatted image link to an image in the same repository."
 license = "GPL-3.0-or-later"
 exclude = [

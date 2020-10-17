@@ -65,7 +65,7 @@ dependencies = [
 
 [[package]]
 name = "ghimlink"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "clap 2.33.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "git2 0.13.12 (registry+https://github.com/rust-lang/crates.io-index)",
