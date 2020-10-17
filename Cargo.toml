@@ -10,7 +10,7 @@ exclude = [
 repository = "https://github.com/SCOTPAUL/ghimlink"
 
 [dependencies]
-clap = "2.31.2"
-git2 = "0.7.1"
-regex = "1.0.0"
-text_io = "0.1.7"
+clap = "2.33.3"
+git2 = "0.13.12"
+regex = "1.4.1"
+text_io = "0.1.8"

@@ -10,6 +10,7 @@ use std::io;
 use std::io::Write;
 use std::error::Error;
 
+#[derive(Debug)]
 struct ImageDetails {
     alt_text: String,
     image_path: PathBuf
@@ -17,10 +18,9 @@ struct ImageDetails {
 
 fn main() {
     let matches = app_from_crate!()
-                    .args_from_usage("-b --branch=[BRANCH_NAME] 'Sets the file's branch name (defaults to current)'
+        .args_from_usage("-b --branch=[BRANCH_NAME] 'Sets the file's branch name (defaults to current)'
                                       -a --alt_text=[ALT_TEXT] 'Sets the alt-text for the image'
-                                     <IMAGE_PATH> 'Path to the image file'")
-                    .get_matches();
+                                     <IMAGE_PATH> 'Path to the image file'").get_matches();
 
     let image_path = matches.value_of("IMAGE_PATH").unwrap();
 
@@ -32,7 +32,6 @@ fn main() {
     let alt_text = matches.value_of("alt_text");
 
     let details = get_image_link_details(&image_path, alt_text);
-    
 
     match details {
         Ok(details) => {
@@ -42,7 +41,7 @@ fn main() {
                     remote_name,
                     "raw",
                     branch_name,
-                    details.image_path.to_str().unwrap()),
+                    details.image_path.to_str().unwrap().replace("\\", "/")),
                 Err(e) => eprintln!("Error: {}", e)
             };
         },
@@ -58,7 +57,7 @@ fn get_current_branch() -> Result<String, git2::Error> {
     Ok(branch.shorthand().unwrap().to_string())
 }
 
-fn get_image_link_details(image_path: &str, alt_text_option: Option<&str>) -> Result<ImageDetails, Box<Error>> {
+fn get_image_link_details(image_path: &str, alt_text_option: Option<&str>) -> Result<ImageDetails, Box<dyn Error>> {
     let path = get_relative_image_path(image_path)?;
 
     let alt_text = match alt_text_option {
@@ -66,20 +65,21 @@ fn get_image_link_details(image_path: &str, alt_text_option: Option<&str>) -> Re
         None => {
             print!("Enter alt text: ");
             io::stdout().flush().unwrap();
-            let alt_text: String = read!();
+            let alt_text: String = read!("{}\n");
             alt_text
         }
     };
 
-    Ok(ImageDetails { alt_text: alt_text, image_path: path })
+    Ok(ImageDetails { alt_text, image_path: path })
 }
 
-fn get_relative_image_path(image_path: &str) -> Result<PathBuf, Box<Error>> {
+fn get_relative_image_path(image_path: &str) -> Result<PathBuf, Box<dyn Error>> {
     let full_path = Path::new(image_path).canonicalize()?;
 
     let repo = Repository::open_from_env()?;
 
-    let repo_path = repo.path().parent().ok_or("Repo path not found")?;
+    let repo_path = repo.path().parent().ok_or("Repo path not found")?.canonicalize()?;
+
     let relative_path = full_path.strip_prefix(repo_path).unwrap().to_path_buf();
 
     Ok(relative_path)
