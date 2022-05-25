@@ -17,36 +17,14 @@ struct ImageDetails {
 }
 
 fn main() {
-    let matches = app_from_crate!()
-        .args_from_usage("-b --branch=[BRANCH_NAME] 'Sets the file's branch name (defaults to current)'
-                                      -a --alt_text=[ALT_TEXT] 'Sets the alt-text for the image'
-                                     <IMAGE_PATH> 'Path to the image file'").get_matches();
-
-    let image_path = matches.value_of("IMAGE_PATH").unwrap();
-
-    let branch_name = matches.value_of("branch")
-        .map(|v| v.to_string())
-        .or_else(|| get_current_branch().ok())
-        .unwrap_or("master".to_string());
-
-    let alt_text = matches.value_of("alt_text");
-
-    let details = get_image_link_details(&image_path, alt_text);
-
-    match details {
-        Ok(details) => {
-            match get_remote_url() {
-                Ok(remote_name) => println!("![{}]({}{}/{}/{})",
-                    details.alt_text,
-                    remote_name,
-                    "raw",
-                    branch_name,
-                    details.image_path.to_str().unwrap().replace("\\", "/")),
-                Err(e) => eprintln!("Error: {}", e)
-            };
-        },
-        Err(e) => eprintln!("Error: {}", e)
-    };
+    let matches = App::new("folder-locker")
+    .version("1.0")
+    .author("Paul Cowie <paul.cowie@ntlworld.com>")
+    .about("Does awesome things")
+    .arg("-l, --lock 'Puts the tool in locking mode'")
+    .arg("-u, --lock 'Puts the tool in unlocking mode'")
+    .arg("<INPUT_FOLDER> 'Folder to lock or unlock'")
+    .get_matches();
 
 }
 
